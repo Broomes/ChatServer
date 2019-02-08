@@ -24,7 +24,7 @@ public class MessageEncoder implements Encoder.Text<Message> {
         message.setReceived(dateFormat.format(date));
 
         return Json.createObjectBuilder()
-                .add("user", message.getSender())
+                .add("sender", message.getSender())
                 .add("content", message.getContent())
                 .add("time", message.getReceived())
                 .build().toString();
