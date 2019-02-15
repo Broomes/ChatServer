@@ -26,6 +26,7 @@ public class ChatServerEndpoint {
     public void onOpen(Session session,
                        @PathParam("roomName") String roomName,
                        @PathParam("userName") String userName )  throws IOException, EncodeException {
+        roomName = roomName.toLowerCase();
         session.setMaxIdleTimeout(5 * 60 * 1000);
         session.getUserProperties().putIfAbsent("roomName", roomName);
         session.getUserProperties().putIfAbsent("userName", userName);
