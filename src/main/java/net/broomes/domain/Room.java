@@ -21,6 +21,14 @@ public class Room implements Function<String, Room> {
         this.name = name;
     }
 
+    public List<String> getUserInRoom(){
+        List<String> users = new ArrayList<>();
+        for(Session session : sessions){
+            users.add(session.getUserProperties().get("userName").toString());
+        }
+        return users;
+    }
+
     public synchronized void join(Session session) {
         sessions.add(session);
     }
@@ -44,5 +52,9 @@ public class Room implements Function<String, Room> {
         } catch (EncodeException e) {
             e.printStackTrace();
         }
+    }
+
+    public synchronized void sendListOfActiveRoomes(){
+
     }
 }

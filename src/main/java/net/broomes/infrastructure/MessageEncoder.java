@@ -6,11 +6,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.json.Json;
+import javax.json.JsonArrayBuilder;
 import javax.websocket.Encoder;
 import javax.websocket.EndpointConfig;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class MessageEncoder implements Encoder.Text<Message> {
 
@@ -23,10 +25,19 @@ public class MessageEncoder implements Encoder.Text<Message> {
         Date date = new Date();
         message.setReceived(dateFormat.format(date));
 
+        List<String> listOfUserInRoom = message.getRoom().getUserInRoom();
+
+        JsonArrayBuilder jsonArrayOfUsers = Json.createArrayBuilder();
+
+        for (String user : listOfUserInRoom){
+            jsonArrayOfUsers.add(user);
+        }
+
         return Json.createObjectBuilder()
                 .add("sender", message.getSender())
                 .add("content", message.getContent())
                 .add("time", message.getReceived())
+                .add("activeUsers", jsonArrayOfUsers.build())
                 .build().toString();
     }
 

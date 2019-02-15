@@ -5,6 +5,15 @@ public class Message {
     private String content;
     private String sender;
     private String received;
+    private Room room;
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
 
     public String getContent() {
         return content;

@@ -37,25 +37,36 @@ public class ChatServerEndpoint {
         room.join(session);
 
         Message mess = new Message();
-        mess.setSender(userName);
-        mess.setContent("Welcome to the chatroom.");
+        mess.setSender("Chatroom Admin");
+        mess.setContent(userName + " has joined the room.");
+        mess.setRoom(room);
 
-        session.getBasicRemote().sendObject(mess);
+        room.sendMessage(mess);
     }
 
     @OnMessage
     public void onMessage(Message message, Session session) {
 
         logger.info(message.toString());
+        message.setRoom(rooms.get(session.getUserProperties().get("roomName")));
         rooms.get(session.getUserProperties().get("roomName")).sendMessage(message);
 
     }
 
 
     @OnClose
-    public void onClose(Session session) {
+    public void onClose(Session session) throws IOException, EncodeException {
 
-        rooms.get(session.getUserProperties().get("roomName")).leave(session);
+        Message mess = new Message();
+        Room room = rooms.get(session.getUserProperties().get("roomName"));
+
+        room.leave(session);
+
+        mess.setSender("Chatroom Admin");
+        mess.setContent(session.getUserProperties().get("userName") + " has left the room.");
+        mess.setRoom(room);
+
+        room.sendMessage(mess);
     }
 
     @OnError
