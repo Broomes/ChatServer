@@ -47,14 +47,8 @@ public class Room implements Function<String, Room> {
     private void sendMessage(Message message, Session session) {
         try {
             session.getBasicRemote().sendObject(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (EncodeException e) {
+        } catch (IOException | EncodeException e) {
             e.printStackTrace();
         }
-    }
-
-    public synchronized void sendListOfActiveRoomes(){
-
     }
 }

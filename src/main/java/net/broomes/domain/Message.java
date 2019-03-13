@@ -45,11 +45,8 @@ public class Message {
 
     @Override
     public String toString(){
-        String fromattedMessageString = (
-                "From: " + sender +
-                        "\nOn: " + received +
-                        "\nMessage: " + content
-                );
-        return fromattedMessageString;
+        return "From: " + sender +
+                "\nOn: " + received +
+                "\nMessage: " + content;
     }
 }
